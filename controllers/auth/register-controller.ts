@@ -1,16 +1,16 @@
 import type { Request, Response, NextFunction } from "express";
 import ErrorService from "../../services/error-service";
+import userService from "../../services/user-service";
+import UserDto from "../../dtos/user-dto";
 interface IUser {
   name: string;
   email: string;
   password: string;
+  isArtist?: boolean;
 }
 
 class RegisterController {
   async register(req: Request, res: Response, next: NextFunction) {
-    // else create the user
-    // generate jwt tokens
-
     // verify request
     const { name, email, password }: IUser = req.body;
 
@@ -19,12 +19,21 @@ class RegisterController {
     }
 
     // check if user is already present in the db
+    let user;
     try {
+      user = await userService.findUser({ email });
+
+      if (!user) {
+        // else create the user
+        user = await userService.createUser({ name, email, password });
+      }
     } catch (error) {
       return next(error);
     }
 
-    return res.status(200).json({ message: "user created successfully" });
+    // generate jwt tokens
+    const userDto = new UserDto(user);
+    res.status(200).json(userDto);
   }
 }
 
