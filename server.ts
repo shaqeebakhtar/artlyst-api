@@ -1,10 +1,15 @@
-import express,{Express, Request, Response} from "express";
-const app:Express = express();
+import express, { Express, json } from "express";
+import dotenv from "dotenv";
+import router from "./routes";
+import { APP_PORT } from "./utils";
+const app: Express = express();
 
-app.get("/", (req:Request, res:Response) => {
-  res.send("Hello");
-});
+dotenv.config();
+const PORT: string = process.env.PORT || (APP_PORT as string);
 
-app.listen(3000, () => {
-  console.log("Listening on port 3000");
+app.use(json());
+app.use("/api", router);
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
