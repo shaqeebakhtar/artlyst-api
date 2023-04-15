@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-
+import type { Request, Response, NextFunction } from "express";
+import ErrorService from "../../services/error-service";
 interface IUser {
   name: string;
   email: string;
@@ -7,14 +7,24 @@ interface IUser {
 }
 
 class RegisterController {
-  register(req: Request, res: Response) {
+  async register(req: Request, res: Response, next: NextFunction) {
+    // else create the user
+    // generate jwt tokens
+
+    // verify request
     const { name, email, password }: IUser = req.body;
 
     if (!name || !email || !password) {
-      res.status(422).json({ message: "all fields are required!" });
+      return next(ErrorService.validation("all fields are required"));
     }
 
-    res.status(200).json({ message: "user created successfully" });
+    // check if user is already present in the db
+    try {
+    } catch (error) {
+      return next(error);
+    }
+
+    return res.status(200).json({ message: "user created successfully" });
   }
 }
 

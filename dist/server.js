@@ -30,11 +30,13 @@ const express_1 = __importStar(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const routes_1 = __importDefault(require("./routes"));
 const utils_1 = require("./utils");
+const error_handler_1 = __importDefault(require("./middlewares/error-handler"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 const PORT = process.env.PORT || utils_1.APP_PORT;
 app.use((0, express_1.json)());
 app.use("/api", routes_1.default);
+app.use(error_handler_1.default);
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });

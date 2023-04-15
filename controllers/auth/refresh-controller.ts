@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 class RefreshController {
   async refersh(req: Request, res: Response) {}
