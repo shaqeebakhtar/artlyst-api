@@ -1,8 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
-import { ErrorService } from "../../services";
-import { userService } from "../../services";
+import {
+  ErrorService,
+  userService,
+  hashService,
+  tokenService,
+} from "../../services";
 import { UserDto } from "../../dtos";
-import bcrypt from "bcrypt";
 interface IUser {
   name: string;
   email: string;
@@ -30,7 +33,7 @@ class RegisterController {
     }
 
     // hash the password
-    const hashedPass = await bcrypt.hash(password, 10);
+    const hashedPass = await hashService.hashPassword(password);
 
     // else create a new user
     let user;
@@ -44,9 +47,14 @@ class RegisterController {
       return next(error);
     }
 
+    const { accessToken, refreshToken } = tokenService.generateTokens({
+      _id: user._id,
+      isArtist: user.isArtist,
+    });
+
     // generate jwt tokens
     const userDto = new UserDto(user);
-    res.status(200).json(userDto);
+    res.status(200).json({ accessToken, refreshToken });
   }
 }
 
