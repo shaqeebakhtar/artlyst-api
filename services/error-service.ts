@@ -9,6 +9,10 @@ class ErrorService extends Error {
   static validation(message: string) {
     return new ErrorService(422, message);
   }
+
+  static alreadyExists(message: string) {
+    return new ErrorService(409, message);
+  }
 }
 
 export default ErrorService;

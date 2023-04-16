@@ -2,7 +2,7 @@ import express, { Express, json } from "express";
 import dotenv from "dotenv";
 import router from "./routes";
 import { APP_PORT } from "./utils";
-import errorHandler from "./middlewares/error-handler";
+import { errorHandler } from "./middlewares";
 import connectDB from "./database";
 const app: Express = express();
 

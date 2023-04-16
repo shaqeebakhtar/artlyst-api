@@ -1,4 +1,4 @@
-import UserModel from "../models/user-model";
+import { UserModel } from "../models";
 interface IUser {
   name: string;
   email: string;
@@ -18,6 +18,11 @@ class UserService {
 
   async findUser(filter: IUserFilter) {
     const user = await UserModel.findOne(filter);
+    return user;
+  }
+
+  async alreadyExists(filter: IUserFilter) {
+    const user = await UserModel.exists(filter);
     return user;
   }
 }

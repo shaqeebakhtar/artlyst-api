@@ -1,6 +1,6 @@
 import { ErrorRequestHandler } from "express";
 import { DEBUG_MODE } from "../utils";
-import ErrorService from "../services/error-service";
+import { ErrorService } from "../services";
 
 interface IErrorData {
   message: string;
@@ -10,7 +10,7 @@ interface IErrorData {
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode: number = 500;
   let errorData: IErrorData = {
-    message: "internal server error",
+    message: "Internal server error",
     ...(DEBUG_MODE === "true" && { originalError: err.message }),
   };
 
