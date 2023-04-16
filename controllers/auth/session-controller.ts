@@ -41,7 +41,22 @@ class SessionController {
       _id: user._id,
       isArtist: user.isArtist,
     });
-    res.status(200).json({ accessToken, refreshToken });
+
+    res.cookie("access_token", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: "none",
+      httpOnly: true,
+      secure: true,
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: "none",
+      httpOnly: true,
+      secure: true,
+    });
+
+    res.status(200).json({ message: "Logged In" });
   }
 
   async logout(req: Request, res: Response) {}

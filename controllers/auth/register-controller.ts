@@ -53,8 +53,22 @@ class RegisterController {
       isArtist: user.isArtist,
     });
 
+    res.cookie("access_token", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: "none",
+      httpOnly: true,
+      secure: true,
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      sameSite: "none",
+      httpOnly: true,
+      secure: true,
+    });
+
     const userDto = new UserDto(user);
-    res.status(200).json({ accessToken, refreshToken });
+    res.status(200).json(userDto);
   }
 }
 

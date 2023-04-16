@@ -5,6 +5,7 @@ import {
   registerController,
   refreshController,
 } from "../controllers";
+import { authMiddleware } from "../middlewares";
 
 router.post("/auth/register", registerController.register);
 router.post("/auth/login", sessionController.login);

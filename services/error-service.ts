@@ -17,6 +17,10 @@ class ErrorService extends Error {
   static wrongCredentials(message: string = "Email or password is incorrect") {
     return new ErrorService(401, message);
   }
+
+  static unauthorized(message: string = "You are not authorized to access") {
+    return new ErrorService(401, message);
+  }
 }
 
 export default ErrorService;
