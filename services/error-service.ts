@@ -13,6 +13,10 @@ class ErrorService extends Error {
   static alreadyExists(message: string) {
     return new ErrorService(409, message);
   }
+
+  static wrongCredentials(message: string = "Email or password is incorrect") {
+    return new ErrorService(401, message);
+  }
 }
 
 export default ErrorService;

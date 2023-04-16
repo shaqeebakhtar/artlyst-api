@@ -1,7 +1,49 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
+import {
+  ErrorService,
+  hashService,
+  tokenService,
+  userService,
+} from "../../services";
 
+interface IUser {
+  email: string;
+  password: string;
+}
 class SessionController {
-  async login(req: Request, res: Response) {}
+  async login(req: Request, res: Response, next: NextFunction) {
+    const { email, password }: IUser = req.body;
+
+    if (!email || !password) {
+      return next(ErrorService.validation("All fields are required"));
+    }
+
+    let user;
+    try {
+      // check if email exists
+      user = await userService.findUser({ email });
+      if (!user) {
+        return next(ErrorService.wrongCredentials());
+      }
+
+      // check if password matches
+      const match = await hashService.checkPassword(password, user.password);
+
+      if (!match) {
+        return next(ErrorService.wrongCredentials());
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+    // then generate tokens
+    const { accessToken, refreshToken } = tokenService.generateTokens({
+      _id: user._id,
+      isArtist: user.isArtist,
+    });
+    res.status(200).json({ accessToken, refreshToken });
+  }
+
   async logout(req: Request, res: Response) {}
 }
 

@@ -21,6 +21,14 @@ class TokenService {
 
     return { accessToken, refreshToken };
   }
+
+  verifyAccessToken(token: string) {
+    return jwt.verify(token, accessTokenSecret as string);
+  }
+
+  verifyRefreshToken(token: string) {
+    return jwt.verify(token, refreshTokenSecret as string);
+  }
 }
 
 export default new TokenService();

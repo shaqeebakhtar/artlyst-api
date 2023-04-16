@@ -47,12 +47,12 @@ class RegisterController {
       return next(error);
     }
 
+    // generate jwt tokens
     const { accessToken, refreshToken } = tokenService.generateTokens({
       _id: user._id,
       isArtist: user.isArtist,
     });
 
-    // generate jwt tokens
     const userDto = new UserDto(user);
     res.status(200).json({ accessToken, refreshToken });
   }

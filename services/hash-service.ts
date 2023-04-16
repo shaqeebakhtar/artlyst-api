@@ -13,6 +13,10 @@ class HashService {
   async hashPassword(password: string) {
     return await bcrypt.hash(password, 10);
   }
+
+  async checkPassword(reqPassword: string, userPassword: string) {
+    return await bcrypt.compare(reqPassword, userPassword);
+  }
 }
 
 export default new HashService();
