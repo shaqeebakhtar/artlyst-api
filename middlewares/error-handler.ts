@@ -21,6 +21,12 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     };
   }
 
+  if (err instanceof Error) {
+    errorData = {
+      message: err.message,
+    };
+  }
+
   return res.status(statusCode).json(errorData);
 };
 

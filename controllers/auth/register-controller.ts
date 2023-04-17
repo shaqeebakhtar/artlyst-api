@@ -53,6 +53,8 @@ class RegisterController {
       isArtist: user.isArtist,
     });
 
+    await tokenService.storeRefreshToken(refreshToken, user._id);
+
     res.cookie("access_token", accessToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       sameSite: "none",

@@ -6,6 +6,7 @@ interface IUser {
   isArtist?: boolean;
 }
 interface IUserFilter {
+  _id?: object;
   name?: string;
   email?: string;
 }

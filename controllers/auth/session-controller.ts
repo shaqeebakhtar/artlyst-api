@@ -42,6 +42,8 @@ class SessionController {
       isArtist: user.isArtist,
     });
 
+    await tokenService.storeRefreshToken(refreshToken, user._id);
+
     res.cookie("access_token", accessToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       sameSite: "none",
@@ -56,10 +58,25 @@ class SessionController {
       secure: true,
     });
 
-    res.status(200).json({ message: "Logged In" });
+    res.status(200).json({ accessToken, refreshToken });
   }
 
-  async logout(req: Request, res: Response) {}
+  async logout(req: Request, res: Response, next: NextFunction) {
+    const { refreshToken: refreshTokenFromCookie } = req.cookies;
+
+    if (!refreshTokenFromCookie) {
+      return next(ErrorService.unauthorized("Invalid refresh token"));
+    }
+
+    // delete refresh token from db
+    await tokenService.deleteRefreshToken(refreshTokenFromCookie);
+
+    // clear cookie in the web
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+
+    res.status(200).json({ user: null });
+  }
 }
 
 export default new SessionController();

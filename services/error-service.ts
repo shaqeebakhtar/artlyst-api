@@ -21,6 +21,10 @@ class ErrorService extends Error {
   static unauthorized(message: string = "You are not authorized to access") {
     return new ErrorService(401, message);
   }
+
+  static notFound(message: string) {
+    return new ErrorService(404, message);
+  }
 }
 
 export default ErrorService;

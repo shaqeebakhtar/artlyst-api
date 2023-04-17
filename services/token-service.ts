@@ -3,6 +3,8 @@ import {
   JWT_ACCESS_TOKEN_SECRET as accessTokenSecret,
   JWT_REFRESH_TOKEN_SECRET as refreshTokenSecret,
 } from "../utils";
+import { TokenModel } from "../models";
+import ErrorService from "./error-service";
 
 interface IPayload {
   _id: object;
@@ -28,6 +30,38 @@ class TokenService {
 
   verifyRefreshToken(token: string) {
     return jwt.verify(token, refreshTokenSecret as string);
+  }
+
+  async storeRefreshToken(token: string, userId: object) {
+    try {
+      await TokenModel.create({ token, userId });
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async findRefreshToken(token: string, userId: object) {
+    try {
+      return await TokenModel.findOne({ token, userId });
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async updateRefreshToken(token: string, userId: object) {
+    try {
+      await TokenModel.findOneAndUpdate({ userId }, { token });
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async deleteRefreshToken(token: string) {
+    try {
+      await TokenModel.deleteOne({ token });
+    } catch (error) {
+      throw new Error();
+    }
   }
 }
 
