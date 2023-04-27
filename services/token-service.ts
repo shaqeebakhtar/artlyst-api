@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import {
   JWT_ACCESS_TOKEN_SECRET as accessTokenSecret,
   JWT_REFRESH_TOKEN_SECRET as refreshTokenSecret,
-} from "../utils";
+} from "../config";
 import { TokenModel } from "../models";
 import ErrorService from "./error-service";
 

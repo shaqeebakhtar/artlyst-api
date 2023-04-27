@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { HASH_SECRET as hashSecret } from "../utils";
+import { HASH_SECRET as hashSecret } from "../config";
 import bcrypt from "bcrypt";
 
 class HashService {

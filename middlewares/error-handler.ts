@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from "express";
-import { DEBUG_MODE } from "../utils";
+import { DEBUG_MODE } from "../config";
 import { ErrorService } from "../services";
 
 interface IErrorData {
