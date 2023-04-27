@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const {
+  BASE_URL,
   APP_PORT,
   DB_URL,
   DEBUG_MODE,
