@@ -12,10 +12,10 @@ import { authMiddleware } from "../middlewares";
 router.post("/auth/register", registerController.register);
 // session
 router.post("/auth/login", sessionController.login);
-router.post("/logout", sessionController.logout);
+router.post("/logout", authMiddleware, sessionController.logout);
 // refresh
-router.post("/refresh", refreshController.refersh);
+router.post("/refresh", authMiddleware, refreshController.refersh);
 // product
-router.post("/product", productController.add);
+router.post("/upload/product", productController.add);
 
 export default router;

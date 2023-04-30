@@ -22,8 +22,16 @@ class ErrorService extends Error {
     return new ErrorService(401, message);
   }
 
+  static accessForbidden(message: string = "You don't have right permissions") {
+    return new ErrorService(403, message);
+  }
+
   static notFound(message: string) {
     return new ErrorService(404, message);
+  }
+
+  static serverError(message: string = "Internal server error") {
+    return new ErrorService(500, message);
   }
 }
 
