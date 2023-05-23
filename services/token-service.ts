@@ -4,12 +4,7 @@ import {
   JWT_REFRESH_TOKEN_SECRET as refreshTokenSecret,
 } from "../config";
 import { TokenModel } from "../models";
-import ErrorService from "./error-service";
-
-interface IPayload {
-  _id: object;
-  isArtist: boolean;
-}
+import { IPayload } from "../interfaces";
 
 class TokenService {
   generateTokens(payload: IPayload) {

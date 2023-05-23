@@ -4,7 +4,7 @@ import { BASE_URL } from "../config";
 const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
-    image: {
+    imageUrl: {
       type: String,
       required: true,
       get: (image: string) => {
@@ -13,8 +13,8 @@ const ProductSchema = new Schema(
     },
     price: { type: Number, required: true },
     description: { type: String, required: true },
-    category: { type: Array, required: true },
-    keywords: { type: Array, required: true },
+    category: [{ type: String, required: true }],
+    keywords: [{ type: String, required: true }],
     artist: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   },
   { timestamps: true, toJSON: { getters: true } }

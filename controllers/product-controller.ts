@@ -1,18 +1,36 @@
-import type { Response, NextFunction } from "express";
-import { ErrorService } from "../services";
+import type { Response, NextFunction, Request } from "express";
+import { ErrorService, productService } from "../services";
+import { ProductDto } from "../dtos";
+import { IProduct } from "../interfaces";
 
 class ProductController {
   async add(req: any, res: Response, next: NextFunction) {
-    // validate the data
-    const { title, price, description, keywords, category } = req.body;
+    const { title, price, description, keywords, category }: IProduct =
+      req.body;
 
+    // validate the data
     if (!title || !price || !description || !keywords || !category) {
       return next(ErrorService.validation("All fields are required"));
     }
 
-    console.log(req.file);
+    let product;
+    try {
+      product = await productService.addProduct({
+        title,
+        price,
+        imageUrl: req.file.path,
+        category,
+        description,
+        keywords,
+        artist: req.user._id,
+      });
+    } catch (error) {
+      return next(error);
+    }
 
-    res.status(200).json({ message: "all good" });
+    const productDto = new ProductDto(product);
+
+    res.status(200).json(productDto);
   }
 }
 

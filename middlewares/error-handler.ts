@@ -1,11 +1,7 @@
 import { ErrorRequestHandler } from "express";
 import { DEBUG_MODE } from "../config";
 import { ErrorService } from "../services";
-
-interface IErrorData {
-  message: string;
-  originalError?: string;
-}
+import { IErrorData } from "../interfaces";
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode: number = 500;

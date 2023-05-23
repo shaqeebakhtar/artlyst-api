@@ -5,11 +5,8 @@ import {
   tokenService,
   userService,
 } from "../../services";
+import { IUser } from "../../interfaces";
 
-interface IUser {
-  email: string;
-  password: string;
-}
 class SessionController {
   async login(req: Request, res: Response, next: NextFunction) {
     const { email, password }: IUser = req.body;

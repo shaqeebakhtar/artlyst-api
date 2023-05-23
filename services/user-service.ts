@@ -1,15 +1,5 @@
+import { IUser, IUserFilter } from "../interfaces";
 import { UserModel } from "../models";
-interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  isArtist?: boolean;
-}
-interface IUserFilter {
-  _id?: object;
-  name?: string;
-  email?: string;
-}
 
 class UserService {
   async createUser(data: IUser) {

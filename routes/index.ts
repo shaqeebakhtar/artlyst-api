@@ -17,9 +17,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const suffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const uniqueName = `${file.originalname}-${suffix}${path.extname(
-      file.originalname
-    )}`;
+    const uniqueName = `${
+      file.originalname.split(".")[0]
+    }-${suffix}${path.extname(file.originalname)}`;
     cb(null, uniqueName);
   },
 });
@@ -37,6 +37,11 @@ router.post("/logout", authMiddleware, sessionController.logout);
 // refresh
 router.post("/refresh", authMiddleware, refreshController.refersh);
 // product
-router.post("/upload/product", upload.single("image"), productController.add);
+router.post(
+  "/upload/product",
+  authMiddleware,
+  upload.single("image"),
+  productController.add
+);
 
 export default router;

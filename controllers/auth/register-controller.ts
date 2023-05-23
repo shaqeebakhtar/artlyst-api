@@ -6,12 +6,7 @@ import {
   tokenService,
 } from "../../services";
 import { UserDto } from "../../dtos";
-interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  isArtist?: boolean;
-}
+import { IUser } from "../../interfaces";
 
 class RegisterController {
   async register(req: Request, res: Response, next: NextFunction) {
